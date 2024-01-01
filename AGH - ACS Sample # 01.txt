@@ -1,0 +1,35 @@
+AGH - ACS Sample # 01
+
+//The following is a sample of my script I wrote for a coding language (ACS) that was actually developed by a company called Raven Software, who created the awesome video game called, Heretic (1994).
+//I utilized this language to define and write my own code for a custom game I've been developing, using a similar engine to one developed for this older game, since the source code for the original game was released long ago.
+//The scripts I've written are in addition to the pre-existing source code, but both work very well together, as I've had to constantly debug my own code blocks, and there are other developers who have worked to expand the capacity of this coding language.
+
+//Created by A. Grant Hill
+
+/*Title of my project is called, Doomed Legends, but everything that's been written in this sample is actually for a spin-off project of my main one....
+/*Anything that doesn't make sense to you, feel free to message me, or refer to online archives associated with this coding platform.
+/*A demo version of this lesser project will eventually be released for public access, detailing a brief description of what the project consists of, and what's needed to run it.
+
+//This script only works for the wad file titled, Doomed Legends Map 02. The first doomed legends lab map never made it to the point in which ACS was necessary.
+//The following is merely a backup of my entire ACS script for this specific map in the game of Doom 2, and will not be implementable on any other maps. It will also require the Doomed Legends Lab pk3 file to run properly.
+#include  "zcommon.acs"//All scripts written inside of zdoom, or GZDoom, via software such as doom builder, doom builder 2, and the ultimate doom builder, must be compiled before being saved or executed upon use in game.
+Script 01 Enter//Enter seems to immediately enact whatever written script its paired with, as opposed to void scripts. This script seems to have a delay for which the string expressed printed sentence is written, and doesn't last indefinitely.
+{//The compile button here seems to be simultaneously functioning as a saving button, despite being primarily used for script compilation.
+	Print (s:"Welcome to a Doomed Legends Lab Map");
+}
+Script 02 Enter//SectorDamage function is ideal for use to damage non-player entities in the game, while Sector_SetDamage doesn't necessarily achieve this. I tried implementing the Damage_NonPlayers flag with that function, and it didn't work.
+//However, upon further thought; it's possible that because I didn't execute a while loop for that script, that function was only ever executed once, whereas with the while loop, that script can be activated as many times as is specified
+//per its own parameters. So, in this instance, the GetActorProperty calls for variables associated with an actor or thing in the game, that's been identified as such via its own script, and typically has a set number of health points,
+//unless it's a decorative item or something. Aprop_Health seems to be a variable directly associated with the actor's health value, so this line of code is telling the script to deduct an integer variable of health points from any actor
+//that happens to come into contact with the sector tagged with number 27. In this case, I tagged a control sector with the number 27, which in turn I also programmed to function as a swimmable sector, that isn't solid, and is
+{// therefore permeable, allowing for any actor in the game to fall into it, so long as they have mass, and gravity is active. The delay integer variable is likely the number tics being expressed before the script inside of the while loop is run again.
+	while (GetActorProperty (0, APROP_Health) > 0)//What's also great about this simple script is that it doesn't necessarily require the use of TID's (thing identification numbers), whereas a similar script to this could be written as such
+	{// if desired, but then you'd have to give every single actor in the game a TID which would be very tedious and labor some; all the more so when you didn't have to do it in the first place.
+	SectorDamage (27, 4, "Fire", "", DAMAGE_NONPLAYERS);//27 is the sector tag, 4 is the damage value, "Fire" is the damage type string, "" is the form of protection or resistance to the damage in this sector, and Damage_NonPlayers damages non
+	Delay (7);//player actors in the game. If you wanted to, another flag could be entered into this space of the code such as, | Damage_In_Air, which would enable the sector itself, as well as the sector above it, to damage actors passing through
+	}//it. However, the manner in which I have constructed the script here is such that this additional flag wasn't needed, and so any non-player actor in the game that comes into contact with sector 27, will take damage.
+}//It's a little strange having a pool of lava that damages only monsters, and not actual players, so while I could find a way to write a script for that inside of Script 02, I'll go ahead and instead write this definition inside of Script 03.
+Script 03 ENTER//This script also targets the sector tagged with the number 27, just like the script above does, but this time, it's telling sector tagged with the number 27 to damage the player based actor with a value of 4, and the form
+{//of death in which the damage dealt by this sector will create, how many tics in between damage sequences, and then the probability that a protective suit might "leak", and damage the player. This script, as it's written, doesn't target
+	Sector_SetDamage (27, 4, 0, 32, 84);//any other actors but the player, which is why I wrote the script above. Perhaps these two bodies of code could be combined into on script in the future, without the need for writing separate scripts
+}//like this. Upon further testing, these two scripts do work well together, but I did notice that if you are killed while these scripts are running, they seem to stop working after the player dies.
